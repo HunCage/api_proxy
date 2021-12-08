@@ -4,14 +4,14 @@ const rateLimit = require("express-rate-limit");
 require("dotenv").config();
 // const errorHandler = require("./middleware/error");
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 3000;
 
 const app = express();
 
 // Rate limiting
 const limiter = rateLimit({
 	windowMs: 10 * 60 * 1000, // 10 Mins
-	max: 100,
+	max: 20,
 });
 app.use(limiter);
 app.set("trust proxy", 1);
