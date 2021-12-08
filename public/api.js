@@ -4,8 +4,7 @@ const cityInput = document.querySelector("#city-input");
 
 // Fetch weather data from API
 const fetchWeather = async (city) => {
-	const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid={API key}cd3336b3046d1a1d6251d00beef198b7
-    `;
+	const url = `/api?q=${city}`;
 
 	const res = await fetch(url);
 	const data = await res.json();
@@ -15,10 +14,16 @@ const fetchWeather = async (city) => {
 		return;
 	}
 
+	if (data.cod === 401) {
+		alert("Invalid API Key");
+		return;
+	}
+
 	const displayData = {
 		city: data.name,
 		temp: kelvinToFahrenheit(data.main.temp),
 	};
+
 	addWeatherToDOM(displayData);
 };
 
@@ -27,7 +32,7 @@ const addWeatherToDOM = (data) => {
 	weatherDisplay.innerHTML = `
     <h1>Weather in ${data.city}</h1>
     <h2>${data.temp} &deg;F</h2>
-    `;
+  `;
 	cityInput.value = "";
 };
 
@@ -47,5 +52,5 @@ weatherForm.addEventListener("submit", (e) => {
 	}
 });
 
-// Inital fetch
-fetchWeather('Biel')
+// Initial fetch
+fetchWeather("Biel");
